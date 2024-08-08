@@ -12,8 +12,6 @@ def positive_assert(kit_body):
     assert kit_response.status_code == 201
     assert kit_response.json()["name"] == kit_body
 
-
-
 def negative_assert_code_400(kit_body):
     # Actualiza el campo name de data kit_body
     kit_body = sender_stand_request.get_kit_body(kit_body)
@@ -29,7 +27,7 @@ def negative_assert_code_400(kit_body):
 # La respuesta contiene el siguiente mensaje de error: "No se han enviado todos los parámetros requeridos"
 def negative_assert_no_name(kit_body):
     # Guarda el resultado de llamar a la función a la variable "response"
-    response = sender_stand_request.post_new_client_kit(kit_body)
+    response = sender_stand_request.post_new_client_kit(kit_body, sender_stand_request.get_new_user_token())
 
     # Comprueba si la respuesta contiene el código 400
     assert response.status_code == 400
@@ -78,7 +76,7 @@ def test_create_user_no_first_name_get_error_response():
     # De lo contrario, se podrían perder los datos del diccionario de origen
     mykit_body = data.kit_bodydata.copy()
 
-    # El parámetro "firstName" se elimina de la solicitud
+    # El parámetro "name" se elimina de la solicitud
     mykit_body.pop("name")
     # Comprueba la respuesta
     negative_assert_no_name(mykit_body)
@@ -88,7 +86,7 @@ def test_create_kit_number_type_name_get_error_response():
     # El cuerpo de la solicitud actualizada se guarda en la variable user_body
     mykit_body = sender_stand_request.get_kit_body(12)
     # El resultado de la solicitud para crear un nuevo usuario o usuaria se guarda en la variable response
-    response = sender_stand_request.post_new_client_kit(mykit_body)
+    response = sender_stand_request.post_new_client_kit(mykit_body, sender_stand_request.get_new_user_token())
 
     # Comprobar el código de estado de la respuesta
     assert response.status_code == 400
