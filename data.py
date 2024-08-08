@@ -1,6 +1,5 @@
 headers = {
     "Content-Type": "application/json",
-    #"Authorization": f"Bearer {create_kit_name_kit_test.auth_token}"
 }
 
 user_body = {
